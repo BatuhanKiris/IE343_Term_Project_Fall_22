@@ -1,0 +1,76 @@
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import com.opencsv.CSVReader;
+
+public class Main {
+  public static void main(String[] args) throws Exception {
+    // part 1
+    Scanner scanner = new Scanner(System.in);
+    long start = scanner.nextLong();
+    CSVReader reader = new CSVReader(new FileReader("term_project_value_data.csv"));
+    List<String[]> rows = reader.readAll();
+    reader.close();
+
+    List<Song> songs = new ArrayList<>();
+    for (String[] row : rows) {
+      Song song = new Song();
+      song.durationMs = Integer.parseInt(row[0]);
+      song.popularity = Integer.parseInt(row[1]);
+      songs.add(song);
+    }
+
+    for (Song song : songs) {
+      song.duration = song.durationMs / 1000;
+      song.score = song.popularity / song.duration;
+    }
+
+    songs.sort((a, b) -> Double.compare(b.score, a.score));
+
+    for (Song song : songs) {
+      song.album = 0;
+    }
+
+    long s = 0;
+    for (Song song : songs) {
+      if (s + song.duration <= 30 * 60) {
+        song.album = 1;
+        s += song.duration;
+      }
+    }
+
+    long cumSum = 0;
+    for (Song song : songs) {
+      song.cumSum = cumSum;
+      cumSum += song.duration;
+    }
+
+    long albumCount = songs.stream().mapToInt(song -> song.album).sum();
+    long albumPopularity = songs.stream().filter(song -> song.album == 1).mapToInt(song -> song.popularity).sum();
+
+    System.out.println(albumCount);
+    System.out.println(albumPopularity);
+
+    // part 2
+    List<Song> albumSongs = songs.stream().filter(song -> song.album == 1).collect(Collectors.toList());
+    albumSongs.sort((a, b) -> Integer.compare(b.popularity, a.popularity));
+
+    List<Integer> sc = albumSongs.stream().map(song -> song.id).collect(Collectors.toList());
+
+    CSVReader reader2 = new CSVReader(new FileReader("term_project_sequential_data.csv"));
+    List<String[]> rows2 = reader2.readAll();
+    reader2.close();
+
+    int[][] sequentialData = new int[rows2.size()][rows2.size()];
+    for (int i = 0; i < rows2.size(); i++) {
+      for (int j = 0; j < rows2.size(); j++) {
+        sequentialData[i][j] = Integer.parseInt(rows2.get(i)[j]);
+      }
+    }
+
+    int f = 0;
+    int l = 11;
+    List<Integer> res = new ArrayList<>();
+    res.add(f);

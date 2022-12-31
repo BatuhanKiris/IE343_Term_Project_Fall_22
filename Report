@@ -1,0 +1,24 @@
+Load a CSV file called "term_project_value_data.csv" into a list of rows, where each row is a list of strings representing the values in the row.
+Create a list of "Song" objects and populate it with data from the rows of the CSV file. Each "Song" object has the following fields: "durationMs", "popularity", "duration", "score", "album", and "cumSum".
+For each "Song" object in the list, calculate the value of the "duration" field by dividing the value of the "durationMs" field by 1000, and the value of the "score" field by dividing the value of the "popularity" field by the value of the "duration" field.
+Sort the "Song" objects in the list in descending order by the value of the "score" field.
+Set the value of the "album" field for each "Song" object in the list to 0.
+Set a variable "s" to 0.
+Iterate through the "Song" objects in the list. For each object, if the value of "s" plus the value of the "duration" field is less than or equal to 30 minutes (1800 seconds), set the value of the "album" field for that object to 1 and add the value of the "duration" field to "s".
+Calculate the cumulative sum of the values in the "duration" field for each "Song" object in the list and store it in the "cumSum" field.
+Print the sum of the values in the "album" field for all the "Song" objects in the list.
+Print the sum of the values in the "popularity" field for the "Song" objects where the value of the "album" field is 1.
+Create a new list of "Song" objects called "albumSongs" that contains only the "Song" objects from the original list where the value of the "album" field is 1.
+Sort the "Song" objects in "albumSongs" in descending order by the value of the "popularity" field.
+Create a list of integers called "sc" that contains the values of the "id" field for the "Song" objects in "albumSongs".
+Load a CSV file called "term_project_sequential_data.csv" into a 2D array of integers called "sequentialData".
+Set a variable "f" to 0 and a variable "l" to 11.
+Create a list of integers called "res" and add "f" to it.
+Remove "f" and "l" from "sc".
+Set a variable "d" to "f".
+Iterate through the values in "sc". For each value, find the index of the maximum value in the row of "sequentialData" corresponding to "d" and the column corresponding to the current value in "sc", and assign it to a variable "a".
+Add "a" to "res".
+Remove "a" from "sc".
+Set "d" to "a".
+Add "l" to "res" and print "res".
+Note that this code does not include error checking or handling, so it may not be production-ready as is. It is also worth noting that this code uses the "psutil" library to measure
